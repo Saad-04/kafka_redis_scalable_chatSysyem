@@ -36,10 +36,10 @@ class SocketService {
 
     console.log("Init start Socket Listeners...");
 
-    io.on("connection", (s) => {
-      console.log(`New Socket Connected`, s.id);
+    io.on("connection", (soc) => {
+      console.log(`New Socket Connected`, soc.id);
 
-      s.on("event:message", async ({ message }: { message: string }) => {
+      soc.on("event:message", async ({ message }: { message: string }) => {
         console.log("New Message Rec.", message);
         // publish this message to redis
         // await pub.publish("MESSAGES", JSON.stringify({ message }));
@@ -59,6 +59,7 @@ class SocketService {
   get io() {
     return this._io;
   }
+  
 }
 
 export default SocketService;

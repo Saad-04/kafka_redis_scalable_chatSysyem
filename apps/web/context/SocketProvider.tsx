@@ -47,9 +47,9 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
     setSocket(_socket);
 
     return () => {
-      _socket.off("message", onMessageRec);
-      _socket.disconnect();
-      setSocket(undefined);
+      // _socket.off("message", onMessageRec);
+      // _socket.disconnect();
+      // setSocket(undefined);
     };
   }, []);
 

@@ -21,12 +21,14 @@ export const useSocket = () => {
 };
 
 export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
+  //
   const [socket, setSocket] = useState<Socket>();
   const [messages, setMessages] = useState<string[]>([]);
 
   const sendMessage: ISocketContext["sendMessage"] = useCallback(
-    (msg:string) => {
+    (msg: string) => {
       console.log("Send Message", msg);
+
       if (socket) {
         socket.emit("event:message", { message: msg });
       }
@@ -34,22 +36,24 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
     [socket]
   );
 
-  const onMessageRec = useCallback((msg: string) => {
+  const onMessageReceived = useCallback((msg: string) => {
     console.log("From Server Msg Rec", msg);
+
     const { message } = JSON.parse(msg) as { message: string };
+
     setMessages((prev) => [...prev, message]);
   }, []);
 
   useEffect(() => {
     const _socket = io("http://localhost:9000");
-    _socket.on("message", onMessageRec);
+    _socket.on("message", onMessageReceived);
 
     setSocket(_socket);
 
     return () => {
-      // _socket.off("message", onMessageRec);
-      // _socket.disconnect();
-      // setSocket(undefined);
+      _socket.off("message", onMessageReceived);
+      _socket.disconnect();
+      setSocket(undefined);
     };
   }, []);
 

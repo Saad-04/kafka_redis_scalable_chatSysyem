@@ -18,7 +18,7 @@ import { Server } from "socket.io";
 // });
 
 class SocketService {
-  private _io: Server;
+  private _io: Server; // this is the property just like we create a property using this.name =  '''
 
   constructor() {
     console.log("init start Socket Service...");
@@ -40,7 +40,7 @@ class SocketService {
       console.log(`New Socket Connected`, soc.id);
 
       soc.on("event:message", async ({ message }: { message: string }) => {
-        console.log("New Message Rec.", message);
+        console.log("New Message Received: ", message);
         // publish this message to redis
         // await pub.publish("MESSAGES", JSON.stringify({ message }));
       });
@@ -59,7 +59,6 @@ class SocketService {
   get io() {
     return this._io;
   }
-  
 }
 
 export default SocketService;

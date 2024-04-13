@@ -31,6 +31,7 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
 
       if (socket) {
         socket.emit("event:message", { message: msg });
+        socket.emit("event:message", { message: msg });
       }
     },
     [socket]

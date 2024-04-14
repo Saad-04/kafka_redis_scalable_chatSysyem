@@ -46,14 +46,14 @@ class SocketService {
       });
     });
 
-    // sub.on("message", async (channel, message) => {
-    //   if (channel === "MESSAGES") {
-    //     console.log("new message from redis", message);
-    //     io.emit("message", message);
-    //     await produceMessage(message);
-    //     console.log("Message Produced to Kafka Broker");
-    //   }
-    // });
+    sub.on("message", async (channel, message) => {
+      if (channel === "MESSAGES") {
+        console.log("new message from redis", message);
+        io.emit("message", message);
+        await produceMessage(message);
+        console.log("Message Produced to Kafka Broker");
+      }
+    });
   }
 
   get io() {
